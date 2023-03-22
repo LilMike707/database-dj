@@ -46,16 +46,30 @@ select release_year, avg(runtime) as average_runtime from movies group by releas
 7.  The movie title and studio name for every movie in the
     database.
 
-
+select movies.title, studios.name from movies join studios on movies.studio_id = studios.id
 
 8.  The star first name, star last name, and movie title for every
     matching movie and star pair in the database.
 
+SELECT stars.first_name, stars.last_name, movies.title
+FROM stars
+JOIN roles ON stars.id = roles.star_id
+JOIN movies ON roles.movie_id = movies.id;
+
 9.  The first and last names of every star who has been in a G-rated movie. The first and last name should appear only once for each star, even if they are in several G-rated movies. *IMPORTANT NOTE*: it's possible that there can be two *different* actors with the same name, so make sure your solution accounts for that.
+
+SELECT DISTINCT s.first_name, s.last_name
+FROM stars s
+JOIN roles r ON s.id = r.star_id
+JOIN movies m ON r.movie_id = m.id
+WHERE m.rating = 'G'
+ORDER BY s.last_name ASC
 
 10. The first and last names of every star along with the number
     of movies they have been in, in descending order by the number of movies. (Similar to #9, make sure
     that two different actors with the same name are considered separately).
+
+select stars.first_name, stars.last_name, COUNT(*) as movie_count from stars join roles on stars.id = roles.star_id group by stars.id order by movie_count DESC;
 
 ### The rest of these are bonuses
 
