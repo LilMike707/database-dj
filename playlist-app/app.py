@@ -44,7 +44,7 @@ def show_all_playlists():
 @app.route("/playlists/<int:playlist_id>")
 def show_playlist(playlist_id):
     """Show detail on specific playlist."""
-
+    
     # ADD THE NECESSARY CODE HERE FOR THIS ROUTE TO WORK
 
 
