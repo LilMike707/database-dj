@@ -33,7 +33,8 @@ class PlaylistSong(db.Model):
     playlist_id = db.Column(db.Integer, db.ForeignKey(
         'playlists.id'), nullable=False)
     song_id = db.Column(db.Integer, db.ForeignKey('songs.id'), nullable=False)
-
+    
+    playlist = db.relationship('Playlist', backref='playlist_songs')
 
 # DO NOT MODIFY THIS FUNCTION
 def connect_db(app):

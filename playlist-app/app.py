@@ -47,9 +47,11 @@ def show_playlist(playlist_id):
     """Show detail on specific playlist."""
     playlist = Playlist.query.get_or_404(playlist_id)
 
-    song = Song.query.get(playlist_id)
+    # songs = Song.query.all()
+    songs = (db.session.query(Song).join(PlaylistSong).filter(PlaylistSong.playlist_id == playlist_id).all())
 
-    return render_template('playlist.html', playlist=playlist, song=song)
+
+    return render_template('playlist.html', playlist=playlist, songs=songs)
     # ADD THE NECESSARY CODE HERE FOR THIS ROUTE TO WORK
 
 
@@ -93,8 +95,10 @@ def show_song(song_id):
     """return a specific song"""
 
     song = Song.query.get_or_404(song_id)
-    songs = PlaylistSong.query.all(song_id)
-    return render_template('song.html', song=song, songs=songs)
+    playlist_songs = PlaylistSong.query.filter(PlaylistSong.song_id == song_id).all()
+    playlists = [ps.playlist for ps in playlist_songs]
+
+    return render_template('song.html', song=song, playlists=playlists )
 
     # ADD THE NECESSARY CODE HERE FOR THIS ROUTE TO WORK
 
